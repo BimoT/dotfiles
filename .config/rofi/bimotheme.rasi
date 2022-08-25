@@ -1,0 +1,100 @@
+*{
+    /*bg: #11121D;*/
+    bg: #000000;
+    bg-alt: #5e1900;
+
+    fg: #FFFFFF;
+    fg-alt: #787c99;
+    /*hl: #ca3f56;*/
+    hl: #cb6500;
+
+    background-color: @bg;
+
+    font: "Ubuntu Nerd Font Complete 15";
+    border-radius: 10;
+    border: 4;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    width: 40%;
+    border-radius: 10;
+    border: 4;
+    border-color: @hl;
+    text-color: @fg;
+}
+
+element {
+    padding: 12;
+    spacing: 10;
+    text-color: @fg-alt;
+}
+
+element selected {
+    text-color: @bg;
+}
+
+element-text {
+    background-color: inherit;
+    text-color: @fg;
+    padding: 20;
+    vertical-align: 0.5;
+    border-radius: inherit;
+    font: inherit;
+}
+
+element-text selected {
+    background-color: @bg-alt;
+    border: inherit;
+    border-color: @hl;
+}
+
+element-icon {
+    size: 40;
+    padding: 10;
+    border-radius: 10;
+}
+
+element-icon selected {
+    background-color: @bg-alt;
+    border: inherit;
+    border-color: @hl;
+}
+
+entry {
+    background-color: @bg;
+    padding: 12;
+    text-color: @fg;
+}
+
+inputbar {
+    border-radius: 10;
+    children: [prompt, entry];
+    border: inherit;
+    border-color: @hl;
+}
+
+listview {
+    padding: 8 12;
+    background-color: @bg;
+    columns: 1;
+    lines: 6;
+}
+
+mainbox {
+    background-color: @bg;
+    padding: 25 15 15;
+    children: [inputbar, listview];
+}
+
+prompt {
+    background-color: @bg;
+    enabled: true;
+    font: "Ubuntu Nerd Font Complete 15";
+    padding: 12 0 0 12;
+    text-color: @fg;
+}
+
+/* vim: ft=css

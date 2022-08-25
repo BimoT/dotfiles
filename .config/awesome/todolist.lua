@@ -1,0 +1,16 @@
+-- create slider for volume widget
+-- create tooltip for volume widget that shows current volume or "M" if muted
+-- change functions of volume widget so that the icon of volumewidget changes
+--
+-- create slider for brightness
+-- create tooltip for brightness
+--
+-- adjust colors on diskwidget
+-- fix memory drain on diskwidget
+-- split up text of both 10 CPU part and 10 Mem part into 2 columns
+-- adjust width for all diskwidgets
+--
+-- adjust width for main menu submenu entries
+--
+-- fix notifications so that they can update each other (no more spammin notifications with volume and brightness)
+-- have keyboard shortcuts use the same system as the clickable widgets

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666667 8.4666667"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="Minimize_button.svg"
+   inkscape:export-filename="/home/mainuser/Pictures/Icons/custom_minimize_icon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="10.248373"
+     inkscape:cx="-29.663245"
+     inkscape:cy="8.4891524"
+     inkscape:window-width="1920"
+     inkscape:window-height="1040"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.1067px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#d45858;fill-opacity:1;stroke:#000000;stroke-width:0.082;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="-1.7525513"
+       y="11.701921"
+       id="text3620"
+       transform="scale(0.93176481,1.0732322)"
+       inkscape:export-filename="/home/mainuser/Pictures/Icons/custom_minimize_focus_icon.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan3618"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.1067px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#d45858;fill-opacity:1;stroke:#000000;stroke-width:0.082;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="-1.7525513"
+         y="11.701921" /></text>
+    <rect
+       style="fill:#ffffff;stroke:#000000;stroke-width:0;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect6005"
+       width="7.1730695"
+       height="2.8364229"
+       x="0.64679861"
+       y="2.8151219"
+       ry="1.4182115"
+       inkscape:export-filename="/home/mainuser/Pictures/Icons/custom_minimize_icon.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>
