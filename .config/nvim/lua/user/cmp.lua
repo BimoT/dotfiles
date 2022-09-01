@@ -97,22 +97,22 @@ cmp.setup({
         format = function(entry, vim_item)
             vim_item.kind = kind_icons[vim_item.kind]
             vim_item.menu = ({
-                nvim_lsp = "",
-				nvim_lua = "",
-				luasnip = "",
-				buffer = "",
-				path = "",
+                nvim_lsp = "[lsp]",
+				nvim_lua = "[lua]",
+				luasnip = "[snip]",
+				buffer = "[buf]",
+				path = "[path]",
 				emoji = "",
             })[entry.source.name]
             return vim_item
         end,
     },
     sources = {
-        { name = "nvim_lsp" },
 		{ name = "nvim_lua" },
+        { name = "nvim_lsp" },
 		{ name = "luasnip" },
-		{ name = "buffer" },
 		{ name = "path" },
+		{ name = "buffer", keyword_length = 5 },
 	},
     sorting = {
         comparators = {

@@ -1,7 +1,7 @@
 -- first, set leader to <space>
-vim.keymap.set("", "<Space>", "<Nop>", {silent=true})
+vim.keymap.set("", "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
-vim.keymap.set("i", "ii", "<Esc>", {silent=true}) -- leave insert mode with "ii"
+vim.keymap.set("i", "ii", "<Esc>", { silent = true }) -- leave insert mode with "ii"
 require("user.globals")
 require("user.alpha")
 require("user.autocommands")

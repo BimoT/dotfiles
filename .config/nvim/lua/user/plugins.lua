@@ -47,6 +47,8 @@ return packer.startup(function(use)
     use { "numToStr/Comment.nvim" } -- easy uncomment/comment
     use { "rcarriga/nvim-notify" } -- notifications prettier
     use { "nvim-telescope/telescope.nvim" } -- fuzzy finder
+    use { "nvim-telescope/telescope-fzf-native.nvim",
+        run = 'make' } -- better faster fuzzy finder
     use { "nvim-telescope/telescope-ui-select.nvim" } -- replaces vim.ui.select() with a telescope selector
     use { "phaazon/hop.nvim", commit = "a7ad781962831c14d53cb9788cc67b8be45a9024", config = function ()
         require("hop").setup()
