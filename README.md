@@ -1,5 +1,7 @@
 # Dotfiles
 
+![Screenshot](https://raw.githubusercontent.com/BimoT/dotfiles/main/.config/.dotfiles-github-assets/screenshot1.png)
+
 This is my **personal configuration**! This is not intended to be copy-pasted and used as your own DE or something like that. Use at your own risk, I guess.
 
 Also, this is a **work in progress**, continually.
