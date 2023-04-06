@@ -1,0 +1,114 @@
+*{
+    black: #000000;
+    white: #ffffff;
+    blue: #000080;
+    grey: #808080;
+    bg-normal: #c0c0c0;
+    /*bg: #11121D;*/
+    bg: @bg-normal;
+    fg: @black;
+
+    bg-alt: @blue;
+    fg-alt: @white;
+    /*hl: #ca3f56;*/
+    hl: @black;
+
+    background-color: @bg;
+
+    font: "Ubuntu Nerd Font Complete 15";
+    border-radius: 0;
+    border-color: @black;
+    border: 2;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    width: 40%;
+    location: center;
+    fullscreen: false;
+    border-color: @hl;
+    background-color: @blue;
+    padding: 25 0 0 0;
+}
+
+element {
+    padding: 0;
+    margin: 15 15 15 15;
+    border: 0;
+    spacing: 0;
+    children: [ element-icon, element-text ];
+    orientation: horizontal;
+    text-color: @fg;
+    background-color: @grey;
+}
+
+element-text {
+    background-color: @grey;
+    text-color: @fg;
+    padding: 10;
+    vertical-align: 0.5;
+    border: 0;
+    font: inherit;
+}
+
+element-text selected {
+    background-color: @bg-alt;
+    text-color: @fg-alt;
+    border: inherit;
+    border-radius: inherit;
+    border-color: @hl;
+}
+
+element-icon {
+    background-color: @grey;
+    size: 40;
+    border: 0;
+    padding: 10;
+}
+
+element-icon selected {
+    border: inherit;
+    background-color: @bg-alt;
+}
+
+prompt {
+    background-color: @bg-alt;
+    text-color: @fg-alt;
+    border: 0;
+    enabled: true;
+    font: "Ubuntu Nerd Font Complete 15";
+    padding: 12 0 0 12;
+}
+
+entry {
+    background-color: @bg-alt;
+    border: 0;
+    padding: 12;
+    text-color: @fg-alt;
+}
+
+inputbar {
+    border-radius: 0;
+    border: 2;
+    children: [prompt, entry];
+    border-color: @hl;
+}
+
+listview {
+    padding: 10;
+    border: 0;
+    background-color: @bg;
+    columns: 1;
+    lines: 6;
+}
+
+mainbox {
+    background-color: @grey;
+    padding: 25;
+    /* margin: 25 0 0 0; */
+    children: [inputbar, listview];
+}
+
+/* vim: ft=css

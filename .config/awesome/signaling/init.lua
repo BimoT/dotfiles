@@ -2,5 +2,5 @@
 
 return {
     brightness = require("signaling.brightness"),
-    volume = require("signaling.volume"),
+    volume     = require("signaling.volume"),
 }

@@ -3,7 +3,7 @@ if not status_ok then return end
 
 toggleterm.setup({
     size = 20,
-    open_mapping = [[<c-\>]],
+    -- open_mapping = [[<c-\>]],
     hide_numbers = true,
     shade_terminals = true,
     shading_factors = 2,
@@ -26,27 +26,27 @@ toggleterm.setup({
 -- end
 
 -- vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
-    pattern = "term://*",
-    callback = function ()
-        local whichkey = require("which-key")
-        whichkey.register({
-            ["<esc>"] = { [[<C-\><C-n>]], "Exit terminal" },
-            ["<C-h>"] = { [[<C-\><C-n><C-W>h]], ""},
-            ["<C-j>"] = { [[<C-\><C-n><C-W>j]], ""},
-            ["<C-k>"] = { [[<C-\><C-n><C-W>k]], ""},
-            ["<C-l>"] = { [[<C-\><C-n><C-W>l]], ""},
-        },
-            {
-            mode = "t",
-            prefix = "",
-            buffer = 0,
-            silent = true,
-            noremap = true,
-            nowait = true,
-        })
-    end
-})
+-- vim.api.nvim_create_autocmd({ "TermOpen" }, {
+--     pattern = "term://*",
+--     callback = function ()
+--         local whichkey = require("which-key")
+--         whichkey.register({
+--             ["<esc>"] = { [[<C-\><C-n>]], "Exit terminal" },
+--             ["<C-h>"] = { [[<C-\><C-n><C-W>h]], ""},
+--             ["<C-j>"] = { [[<C-\><C-n><C-W>j]], ""},
+--             ["<C-k>"] = { [[<C-\><C-n><C-W>k]], ""},
+--             ["<C-l>"] = { [[<C-\><C-n><C-W>l]], ""},
+--         },
+--             {
+--             mode = "t",
+--             prefix = "",
+--             buffer = 0,
+--             silent = true,
+--             noremap = true,
+--             nowait = true,
+--         })
+--     end
+-- })
 --[[ local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 

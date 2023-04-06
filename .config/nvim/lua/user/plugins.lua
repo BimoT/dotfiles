@@ -1,5 +1,3 @@
-local fn = vim.fn
-
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd([[
     augroup packer_user_config
@@ -10,18 +8,16 @@ vim.cmd([[
 
 -- protected call to avoid errors on first use
 local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-    return
-end
+if not status_ok then return end
 
 -- Have packer use a popup window
-packer.init {
+packer.init({
     display = {
         open_fn = function()
             return require("packer.util").float { border = "rounded" }
         end,
     },
-}
+})
 
 -- Install plugins here
 return packer.startup(function(use)
@@ -31,9 +27,9 @@ return packer.startup(function(use)
     use { "nvim-lua/popup.nvim" }
     use { "kyazdani42/nvim-web-devicons" } -- Icons
     --[[ Local packages ]]
-    use { "~/Projects/Lua/massimport.nvim/", config = function ()
-        require("massimport").setup({})
-    end}
+    use { "~/projects/lua/massimport.nvim",
+        config = function () require("massimport").setup({}) end
+    }
     --[[ General packages ]]
     use { "kyazdani42/nvim-tree.lua" } -- File explorer
     use { "goolord/alpha-nvim" } -- custom greeter
@@ -53,9 +49,12 @@ return packer.startup(function(use)
     use { "phaazon/hop.nvim", commit = "a7ad781962831c14d53cb9788cc67b8be45a9024", config = function ()
         require("hop").setup()
     end } -- fast movement
+    use { "folke/trouble.nvim", config = function ()
+        require("trouble").setup({})
+    end}
     --[[ Text manipulation ]]
     use { "windwp/nvim-autopairs" } -- automatically inserts matching brackets/quotes/stuff
-    -- use { "tpope/vim-surround" } -- change surrounding quotes/brackets
+    use { "tpope/vim-surround", disable = true } -- change surrounding quotes/brackets
     use { "kylechui/nvim-surround", config = function ()
         require("nvim-surround").setup({})
     end } -- extended vim-surround
@@ -74,21 +73,45 @@ return packer.startup(function(use)
             css = {css = true}
         })
     end} --colorizes text for like css (color: #f00 )
-    -- use { "dracula/vim" } -- great colorscheme
-    use { "folke/todo-comments.nvim" } -- highlights --TODO and similar comments
+    use { "dracula/vim" } -- great colorscheme
+    use { "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+            require("todo-comments").setup({
+                highlight = {
+                    multiline = false,
+                    before = "",
+                    after = "fg",
+                    keyword = "fg",
+                }
+            })
+        end} -- highlights -- TODO and similar comments
+
     --[[ Treesitter ]]
     use { "nvim-treesitter/nvim-treesitter" }
+    use { "nvim-treesitter/playground" } -- view treesitter information
     use { "nvim-treesitter/nvim-treesitter-textobjects" }
     use { "JoosepAlviste/nvim-ts-context-commentstring" } -- comments for files with multiple languages
+
     --[[ Git ]]
     use { "sindrets/diffview.nvim" } -- view git diff in 1 window
     use { "lewis6991/gitsigns.nvim" } -- git
+
     --[[ Snippets ]]
     use { "L3MON4D3/LuaSnip" } -- the engine for snippets
     use { "rafamadriz/friendly-snippets" } -- premade collection of snippets
+
     --[[ Language-Server Protocol ]]
+    -- neodev needs to be loaded before lspconfig
+    use { "folke/neodev.nvim", config = function ()
+        require("neodev").setup({})
+    end } -- neovim-specific lua hints
+    use { "williamboman/mason.nvim" } -- easy installer
+    use { "williamboman/mason-lspconfig.nvim" } -- extra config for mason
     use { "neovim/nvim-lspconfig" } -- base needed for lsp
-    use { "williamboman/nvim-lsp-installer" } -- easy installer TUI
+    use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function ()
+        require("lsp_lines").setup()
+    end} -- LSP diagnostics in lines under the erroring parts of code
     use { "j-hui/fidget.nvim" , config = function ()
         require("fidget").setup()
     end} -- eye candy for lsp progress
@@ -96,15 +119,22 @@ return packer.startup(function(use)
     use { "RRethy/vim-illuminate", config = function ()
         vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
     end } -- highlights instances of word under cursor
+
     --[[ Language specific stuff ]]
+
     --[[ Human languages ]]
     use { "rhysd/vim-grammarous" } -- uses LanguageTool
+
     --[[ Markdown ]]
     use { "ellisonleao/glow.nvim" } -- preview markdown inside neovim
+
     --[[ Lua ]]
     use { "milisims/nvim-luaref" } -- lua docs as vimdocs 
     use { "nanotee/luv-vimdocs" } -- libuv docs, might need later
-    use { "folke/lua-dev.nvim" } -- neovim-specific lua hints
+
+    --[[ TeX ]]
+    use { "lervag/vimtex" }
+
     --[[ Autocompletion (using cmp) ]]
     -- maybe later test out "coc" or "coq"
     use { "hrsh7th/nvim-cmp" } -- The completion plugin
@@ -114,6 +144,7 @@ return packer.startup(function(use)
     use { "hrsh7th/cmp-nvim-lsp" }
     use { "hrsh7th/cmp-nvim-lua" }
     use { "lukas-reineke/cmp-under-comparator" } -- better autocomplete sorting for items starting with an underscore
+
     --[[ Debug Adapter Protocol ]]
     use { "mfussenegger/nvim-dap" } -- needed for debugger stuff
     use { "rcarriga/nvim-dap-ui" } -- better UI for DAP

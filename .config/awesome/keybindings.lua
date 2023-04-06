@@ -49,6 +49,29 @@ keys.clientbuttons = gears.table.join(
         end)
 )
 
+keys.smalltag_buttons = gears.table.join(
+    --[[ left mouse click ]]
+    awful.button({ }, 1,
+        function (t)
+            awful.tag.viewnext(t.screen)
+        end),
+    --[[ right mouse click ]]
+    awful.button({ }, 3,
+        function (t)
+            awful.tag.viewprev(t.screen)
+        end),
+    --[[ scroll up ]]
+    awful.button({ }, 4,
+        function (t)
+            awful.tag.viewnext(t.screen)
+        end),
+    --[[ scroll down ]]
+    awful.button({ }, 5,
+        function (t)
+            awful.tag.viewprev(t.screen)
+        end)
+)
+
 --[[ Mouse buttons for the taglist ]]
 keys.taglist_buttons = gears.table.join(
     awful.button({ }, 1,
@@ -114,6 +137,40 @@ keys.tasklist_buttons = gears.table.join(
     end)
 )
 
+--[[ Buttons for the titlebar ]]
+keys.titlebar_buttons = gears.table.join(
+     --[[ Left mouse button: Move ]]
+    awful.button({ }, 1, function()
+        local c = mouse.object_under_pointer()
+        c:emit_signal("request::activate", "titlebar", {raise = true})
+        awful.mouse.client.move(c)
+    end),
+    --[[ Middle mouse button: Close ]]
+    awful.button({ }, 2, function()
+        local c = mouse.object_under_pointer()
+        c:kill()
+    end),
+    --[[ Right mouse button: Resize ]]
+    awful.button({ }, 3, function()
+        local c = mouse.object_under_pointer()
+        c:emit_signal("request::activate", "titlebar", {raise = true})
+        awful.mouse.client.resize(c)
+    end),
+    --[[ Shift + Right mouse button: Resize ]]
+    awful.button({ "Shift" }, 3, function()
+        local c = mouse.object_under_pointer()
+        c:emit_signal("request::activate", "titlebar", {raise = true})
+        if not c.floating then c.floating = true end
+        awful.mouse.client.resize(c)
+    end),
+    --[[Shift + Left mouse button: Move + float ]]
+    awful.button({ "Shift" }, 1, function ()
+        local c = mouse.object_under_pointer()
+        client.focus = c
+        if not c.floating then c.floating = true end
+        awful.mouse.client.move(c)
+    end)
+)
 
 --[[ Key bindings ]]
 keys.globalkeys = gears.table.join(
@@ -188,12 +245,12 @@ keys.globalkeys = gears.table.join(
         function()
             signaling.volume.change_volume("up")
         end,
-        {description="volume up 5%", group="screen"}),
+        {description = "volume up 5%", group = "screen"}),
     awful.key({ }, "XF86AudioLowerVolume",
         function()
             signaling.volume.change_volume("down")
         end,
-        {description="volume down 5%", group="screen"}),
+        {description = "volume down 5%", group = "screen"}),
     awful.key({ }, "XF86AudioMute",
         function()
             signaling.volume.toggle_mute()
@@ -205,12 +262,20 @@ keys.globalkeys = gears.table.join(
         function()
             signaling.brightness.change_brightness("up")
         end,
-        {description="brightness up 5%", group="screen"}),
+        {description = "brightness up 5%", group = "screen"}),
     awful.key({ }, "XF86MonBrightnessDown",
         function()
             signaling.brightness.change_brightness("down")
         end,
-        {description="brightness down 5%", group="screen"}),
+        {description = "brightness down 5%", group = "screen"}),
+
+    --[[ PrintScreen: takes screenshot ]]
+    awful.key({ }, "Print",
+        function()
+            apps.flameshot_fullscreen()
+        end,
+        {description = "screenshot", group = "screen"}
+    ),
 
     --[[ Built-in awesomewm functions ]]
     awful.key({ superkey, "Control" }, "r",
@@ -223,7 +288,7 @@ keys.globalkeys = gears.table.join(
         function ()
             hotkeys_popup.show_help(nil, awful.screen.focused())
         end,
-        {description="show help", group="awesome"}),
+        {description = "show help", group = "awesome"}),
 
     --[[ left and right keys: previous/next tag]]
     awful.key({ superkey }, "Left",
@@ -237,19 +302,23 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey, "Control" }, "Left",
         function(c)
             helpers.resize_dwim(client.focus, "left")
-        end),
+        end,
+        {description = "resize left", group = "client"}),
     awful.key({ superkey, "Control" }, "Right",
         function(c)
             helpers.resize_dwim(client.focus, "right")
-        end),
+        end,
+        {description = "resize right", group = "client"}),
     awful.key({ superkey, "Control" }, "Down",
         function(c)
             helpers.resize_dwim(client.focus, "down")
-        end),
+        end,
+        {description = "resize down", group = "client"}),
     awful.key({ superkey, "Control" }, "Up",
         function(c)
             helpers.resize_dwim(client.focus, "up")
-        end),
+        end,
+        {description = "resize up", group = "client"}),
     --[[ Escape: previously viewed tag]]
     --TODO: remove? doesn't make sense to bind this to escape
     awful.key({ superkey }, "Escape",
@@ -258,7 +327,7 @@ keys.globalkeys = gears.table.join(
 
     --[[ u: urgent (or back to last tag) ]]
     awful.key({ superkey }, "u",
-        function ()
+        function()
             local uc = awful.client.urgent.get()
             if uc == nil then
                 awful.tag.history.restore()
@@ -270,7 +339,7 @@ keys.globalkeys = gears.table.join(
     --[[ tab: previously focused window ]]
     awful.key({ superkey }, "Tab",
         -- Switches back and forth, doesn't cycle
-        function ()
+        function()
             awful.client.focus.history.previous()
             if client.focus then
                 client.focus:raise()
@@ -284,7 +353,7 @@ keys.globalkeys = gears.table.join(
             awful.layout.inc( 1)
         end,
         {description = "select next", group = "layout"}),
-    --[[ shitf + space: previous layout style ]]
+    --[[ shift + space: previous layout style ]]
     awful.key({ superkey, "Shift" }, "space",
         function()
             awful.layout.inc(-1)
@@ -408,23 +477,28 @@ end
 --[[ Clientkeys]]
 keys.clientkeys = gears.table.join(
     --[[ Basic client operations (float, maximize, etc.) ]]
+
     --[[ shift + keypad: move to edge/swap by direction ]]
     awful.key({ superkey, "Shift" }, "Down",
         function (c)
             helpers.move_client_dwim(c, "down")
-        end),
+        end,
+        {description = "move client down", group = "client"}),
     awful.key({ superkey, "Shift" }, "Up",
         function (c)
             helpers.move_client_dwim(c, "up")
-        end),
+        end,
+        {description = "move client up", group = "client"}),
     awful.key({ superkey, "Shift" }, "Left",
         function (c)
             helpers.move_client_dwim(c, "left")
-        end),
+        end,
+        {description = "move client left", group = "client"}),
     awful.key({ superkey, "Shift" }, "Right",
         function (c)
             helpers.move_client_dwim(c, "right")
-        end),
+        end,
+        {description = "move client right", group = "client"}),
     --[[ f: fullscreen ]]
     awful.key({ superkey, }, "f",
         function (c)
@@ -434,13 +508,14 @@ keys.clientkeys = gears.table.join(
         {description = "toggle fullscreen", group = "client"}),
     --[[ shift + f: float]]
     awful.key({ superkey, "Shift" }, "f",
-        awful.client.floating.toggle                     ,
+        awful.client.floating.toggle,
         {description = "toggle floating", group = "client"}),
     --[[ c: center if float ]]
     awful.key({ superkey }, "c",
-    function (c)
-        awful.placement.centered(c, {honor_workarea = true, honor_padding = true})
-    end),
+        function (c)
+            awful.placement.centered(c, {honor_workarea = true, honor_padding = true})
+        end,
+        {description = "center if floating", group = "client"}),
     --[[ shift + c: close ]]
     awful.key({ superkey, "Shift" }, "c",
         function (c)
@@ -453,12 +528,6 @@ keys.clientkeys = gears.table.join(
             c:swap(awful.client.getmaster())
         end,
         {description = "move to master", group = "client"}),
-    --TODO: remove this keybinding, move_to_screen is useless apparently
-    awful.key({ superkey }, "o",
-        function (c)
-            c:move_to_screen()
-        end,
-        {description = "move to screen", group = "client"}),
     --[[ t: ontop ]]
     awful.key({ superkey }, "t",
         function (c)

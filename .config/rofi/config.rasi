@@ -151,6 +151,6 @@ configuration {
   }
 }
 
-@theme "~/.config/rofi/bimotheme.rasi"
+@theme "~/.config/rofi/chicago95.rasi"
 
 /* vim: ft=sass

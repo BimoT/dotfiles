@@ -3,7 +3,7 @@ local myoptions = {
     number = true, -- number column
     relativenumber = true, -- numbers are relative to current number
     showtabline = 2, -- always show tab bar
-    hlsearch = true, -- highlights all matches when searching 
+    hlsearch = false, -- I dont want to see the match after i've searched
     wrapscan = false, -- stops searching when the end of the file is reached
     incsearch = true, -- incremental searching when you type
     title = true,
@@ -16,7 +16,7 @@ local myoptions = {
     expandtab = true, -- tabs are converted to spaces
     --}}
     completeopt = { "menuone", "noselect" }, -- autocomplete menu options
-    conceallevel = 0, -- for markdown apparently?
+    conceallevel = 1, -- for markdown apparently?
     showmode = false, -- now it doesn't show "--INSERT-- anymore
     smartindent = true, -- automatic indentation smart
     splitbelow = true, -- horizontal split opens below current window
@@ -39,3 +39,12 @@ vim.opt.whichwrap:append("<,>,[,],h,l")
 for k, v in pairs(myoptions) do
     vim.opt[k] = v
 end
+
+-- TODO: rewrite in lua
+-- This should turn off all the annoying highlighted matches after the search is done
+vim.cmd([[augroup vimrc-incsearch-highlight
+autocmd!
+autocmd CmdLineEnter /,\? :set hlsearch
+autocmd CmdLineLeave /,\? :set nohlsearch
+augroup END
+]])

@@ -1,24 +1,18 @@
 local awesome = awesome or {}
 local awful = require("awful")
-local hotkeys_popup = require("awful.hotkeys_popup")
 local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
-local naughty = require("naughty")
+-- local naughty = require("naughty")
 local dpi = beautiful.xresources.apply_dpi
 -- local mytheme = require("bimotheme")
-local notificate = require("extras.notificate")
-local click_to_hide = require("click_to_hide")
-
-local HOME = os.getenv('HOME')
-local ICON_DIR = HOME .. '/Pictures/Icons/'
-
-local white_icon = ICON_DIR .. "bright_white.png"
-local red_icon = ICON_DIR .. "bright_red.png"
+-- local notificate = require("extras.notificate")
+local apps = require("extras.apps")
+--[[ local click_to_hide = require("click_to_hide") ]]
 
 local awesomewidget = wibox.widget {
     {
-        {   
+        {
             {
                 id = "img",
                 image = beautiful.awesome_icon,
@@ -44,12 +38,46 @@ local awesomewidget = wibox.widget {
     widget = wibox.container.margin,
 }
 
+local function create_icon_widget()
+    wibox.widget {
+        {
+            {
+                {
+                    id = "img",
+                    image = beautiful.awesome_icon,
+                    resize = true,
+                    widget = wibox.widget.imagebox,
+                },
+                id = "mrgnin",
+                margins = beautiful.widget_margin_inner,
+                widget = wibox.container.margin,
+            },
+            id = "bckgrnd",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, beautiful.rounding_param)
+            end,
+            bg = beautiful.bg_normal,
+            shape_border_width = beautiful.widget_border_width,
+            shape_border_color = beautiful.border_focus,
+            widget = wibox.container.background,
+        },
+        id = "mrgnout",
+        left = beautiful.widget_margin_outer,
+        right = beautiful.widget_margin_outer,
+        widget = wibox.container.margin,
+    }
+end
+
 local menu_items = {
-    { name = "Hotkeys", command = function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { name = "Manual", command = function() awful.spawn(terminal .. " -e man awesome") end},
-    { name = "Edit config", command = function() awful.spawn(editor_cmd .. " " .. awesome.conffile) end },
+    --[[ { name = "Hotkeys", command = function() hotkeys_popup.show_help(nil, awful.screen.focused()) end }, ]]
+    { name = "Hotkeys", command = apps.hotkeys_popup },
+    --[[ { name = "Manual", command = function() awful.spawn(terminal .. " -e man awesome") end}, ]]
+    { name = "Manual", command = apps.awesome_manpages },
+    --[[ { name = "Edit config", command = function() awful.spawn(apps.terminal .. " -e " .. "nvim" ..  " " .. awesome.conffile) end }, ]]
+    { name = "Edit config", command = apps.edit_config },
     { name = "Restart", command = awesome.restart },
-    { name = "Quit", command = function() awesome.quit() end },
+    --[[ { name = "Quit", command = function() awesome.quit() end }, ]]
+    { name = "Quit", command = apps.quit_awesome },
 }
 
 local popup = awful.popup {
@@ -85,7 +113,7 @@ for _, item in ipairs(menu_items) do
                     widget = wibox.widget.textbox,
                     forced_width = dpi(150),
                     forced_height = dpi(30),
-                    font = beautiful.font_base.." 13"
+                    font = beautiful.font_base.." 13",
                 },
 --                 spacing = 12,
 --                 layout = wibox.layout.fixed.horizontal,
@@ -135,7 +163,7 @@ end
 
 -- add rows to the popup
 popup:setup(rows)
-click_to_hide(popup)
+--[[ click_to_hide(popup) ]]
 -- Toggle popup visibility on mouse click:
 awesomewidget:buttons(
     gears.table.join(

@@ -94,15 +94,32 @@ local mappings = {
         "<cmd>lua require('toggleterm.terminal').Terminal:new({direction='float', float_opts={border='double'}}):toggle()<CR>",
         "Floating ToggleTerm",
     },
-    ["<leader>TS"] = {
+    ["<leader>TV"] = {
         "<cmd>lua require('toggleterm.terminal').Terminal:new({direction='vertical'}):toggle()<CR>",
-        "Split ToggleTerm",
+        "Vertical ToggleTerm",
     },
+    ["<leader>TH"] = {
+        "<cmd>lua require('toggleterm.terminal').Terminal:new({direction='horizontal'}):toggle()<CR>",
+        "Horizontal ToggleTerm",
+    },
+    ["<leader>TT"] = {
+        "<cmd>lua require('toggleterm.terminal').Terminal:new({direction='tab'}):toggle()<CR>",
+        "Tab ToggleTerm",
+    },
+
+    --[[ tabnew ]]
+    ["<leader>t"] = { "<cmd>tabnew<CR>", "Open new tab" },
 
     --[[ Hop ]]
     ["<leader>h"] = { name = "Hop" },
     ["<leader>ht"] = { "<cmd>HopChar2<CR>", "Hop 2 chars" },
     ["<leader>hw"] = { "<cmd>HopWord<CR>", "Hop word" },
+
+    --[[ Diagnostics ]]
+    ["<leader>d"] = { name = "Diagnostics"},
+    ["<leader>dr"] = { "<cmd>TroubleToggle<CR>", "Trouble (Toggle)"},
+    ["<leader>do"] = { "<cmd>TodoTelescope<CR>", "TODO (Telescope)"},
+
 
     --[[ Telescope ]]
     ["<leader>f"] = { name = "Telescope" },
@@ -113,6 +130,15 @@ local mappings = {
     ["<leader>fR"] = { "<cmd>Telescope registers<CR>", "Registers" },
     ["<leader>fh"] = { "<cmd>Telescope help_tags<CR>", "Help tags" },
 
+    --[[ Quickfix ]]
+    -- TODO: choose a better prefix key, because 'c' = 'compile'
+    --[[ ["<leader>c"] = { name = "Quickfix" }, ]]
+    --[[ ["<leader>co"] = { "<cmd>copen<CR>", "Open" }, ]]
+    --[[ ["<leader>cn"] = { "<cmd>cnext<CR>", "Next" }, ]]
+    --[[ ["<leader>cp"] = { "<cmd>cprevious<CR>", "Previous" }, ]]
+    --[[ ["<leader>cc"] = { "<cmd>cclose<CR>", "Close" }, ]]
+    --[[ ["<leader>cl"] = { "<cmd>clist<CR>", "List" }, ]]
+
     --[[ Git ]]
     ["<leader>g"] = { name = "Git" },
     ["<leader>gg"] = {
@@ -121,19 +147,19 @@ local mappings = {
     },
 
     --[[ DAP ]]
-    ["<leader>d"] = { name = "DAP" },
-    ["<leader>db"] = { "<cmd>lua require('dap').toggle_breakpoint()<cr>" },
-    ["<leader>dc"] = { "<cmd>lua require('dap').continue()<cr>" },
-    ["<leader>di"] = { "<cmd>lua require('dap').step_into()<cr>" },
-    ["<leader>do"] = { "<cmd>lua require('dap').step_over()<cr>" },
-    ["<leader>dO"] = { "<cmd>lua require('dap').step_out()<cr>" },
-    ["<leader>dr"] = { "<cmd>lua require('dap').repl.toggle()<cr>" },
-    ["<leader>dl"] = { "<cmd>lua require('dap').run_last()<cr>" },
-    ["<leader>du"] = { "<cmd>lua require('dapui').toggle()<cr>" },
-    ["<leader>dt"] = { "<cmd>lua require('dap').terminate()<cr>" },
+    ["<leader>D"] = { name = "DAP" },
+    ["<leader>Db"] = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+    ["<leader>Dc"] = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
+    ["<leader>Di"] = { "<cmd>lua require('dap').step_into()<cr>", "Step Into" },
+    ["<leader>Do"] = { "<cmd>lua require('dap').step_over()<cr>", "Step Over" },
+    ["<leader>DO"] = { "<cmd>lua require('dap').step_out()<cr>", "Step Out" },
+    ["<leader>Dr"] = { "<cmd>lua require('dap').repl.toggle()<cr>", "Toggle REPL" },
+    ["<leader>Dl"] = { "<cmd>lua require('dap').run_last()<cr>", "Run Last" },
+    ["<leader>Du"] = { "<cmd>lua require('dapui').toggle()<cr>", "Toggle DAP-UI" },
+    ["<leader>Dt"] = { "<cmd>lua require('dap').terminate()<cr>", "Terminate" },
 
     --[[ Comment ]]
-    ["<leader>/"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment/uncomment line" },
+    ["<leader>/"] = { "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", "Comment/uncomment line" },
 
     --[[ NvimTree ]]
     ["<leader>e"] = { "<cmd>NvimTreeToggle<CR>", "NvimTree" },
@@ -150,16 +176,17 @@ local mappings = {
     ["<leader>q"] = { name = "Quit" },
     ["<leader>qq"] = { "<cmd>q!<CR>", "Quit (force)" },
     ["<leader>qa"] = { "<cmd>qa<CR>", "Quit all" },
-    ["<leader>t"] = { "<Plug>PlenaryTestFile", "Test this file with plenary" },
-    ["<leader>x"] = { "<cmd>w! | so % <CR>", "Save and run this file" },
     ["<leader><CR>"] = { "<cmd>startinsert<CR><CR>", "Open newline at this point" },
+    -- Keybindings for compiling files are located in their own after/ftplugin files
 }
 
 which_key.setup(setup)
--- Visual mode keymaps
+
+--[[ Visual mode keymaps ]]
 which_key.register({
     --stylua: ignore
     ["<leader/"] = { '"_dP', "Paste + black hole" },
+    ["."] = { ":norm .<CR>", "Dot-repeat visual range" },
 }, {
     mode = "v", -- only in normal mode
     prefix = "",
@@ -169,4 +196,21 @@ which_key.register({
     noremap = true,
     nowait = true,
 })
+
+--[[ Terminal mode keymaps ]]
+which_key.register({
+    ["<esc>"] = { [[<C-\><C-n>]], "Exit terminal" },
+    ["<C-h>"] = { [[<C-\><C-n><C-W>h]], ""},
+    ["<C-j>"] = { [[<C-\><C-n><C-W>j]], ""},
+    ["<C-k>"] = { [[<C-\><C-n><C-W>k]], ""},
+    ["<C-l>"] = { [[<C-\><C-n><C-W>l]], ""},
+}, {
+    mode = "t",
+    prefix = "",
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = true,
+})
+
 which_key.register(mappings, opts)

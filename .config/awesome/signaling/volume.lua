@@ -4,11 +4,15 @@ local notificate = require("extras.notificate")
 
 local volumesignals = {}
 
+---Signal to change volume
+--- 
+---To be used by interacting with a widget, as well as the XF86 keyboard keys
+---Emits: `signaling::volume`
+---@param upordown string
+---|"up"
+---|"down"
 volumesignals.change_volume = function(upordown)
     --[[
-        Signal to change volume.
-        upordown is either "up" or "down" for readability (instead of "i" or "d"), determines the volume change direction.
-        This should update the volumewidget, so that it can be used from both the keyboard with the XF86 keys,
         as well as when scrolling over the widget.
         Emits a signal called "signaling::volume"
     --]]
@@ -27,12 +31,11 @@ volumesignals.change_volume = function(upordown)
     end)
 end
 
+---Signal to toggle mute/unmute
+--- 
+---To be used by interacting with a widget, as well as the XF86 keyboard keys
+---Emits: `signaling::mute`
 volumesignals.toggle_mute = function()
-    --[[
-        Signal is to toggle mute status.
-        This should allow both the XF86 key as well as clicking on the volumewidget to mute/unmute the volume.
-        Emits a signal called "signaling::mute"
-    --]]
     awful.spawn.easy_async_with_shell("pamixer -t; pamixer --get-mute",
         function(stdout)
             local mute_status

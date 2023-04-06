@@ -5,30 +5,13 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local wibox = require("wibox")
 local naughty = require("naughty")
+local keybindings = require("keybindings")
 
-local function padding(width) return wibox.widget({forced_width = dpi(50), layout = wibox.layout.fixed.horizontal }) end
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        -- Left mouse button
-        awful.button({ }, 1, function()
-            -- moves the window
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        -- Middle mouse button
-        awful.button({ }, 2, function()
-            -- closes the window
-            c:kill()
-        end), 
-        -- Right mouse button
-        awful.button({ }, 3, function()
-            -- resizes the window
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
+    --[[ buttons for the titlebar ]]
+    local buttons = keybindings.titlebar_buttons
+
     awful.titlebar(c, {size=beautiful.titlebar_height, position="top"}) : setup {
         --[[
             You can uncomment the blocks for "Left" and "Middle" to have icons or text there.
@@ -40,8 +23,8 @@ client.connect_signal("request::titlebars", function(c)
         nil,
         {
             buttons = buttons,
-            widget = wibox.widget.textbox(""),
-            align = "center"
+            widget  = wibox.widget.textbox(""),
+            align   = "center"
         },
 
         --[[ { -- Left

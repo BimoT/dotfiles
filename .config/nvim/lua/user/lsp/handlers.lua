@@ -1,4 +1,5 @@
 local M = {}
+local vim = vim
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_cmp_ok then return end
@@ -6,7 +7,7 @@ local whichkey = require("which-key")
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
     local signs = {
@@ -26,10 +27,18 @@ M.setup = function()
     end
 
     local config = {
-        virtual_text = false, -- disable virtual text
-        signs = {
-            active = signs -- show signs
+        -- [[ Currently virtual text enabled, checking out lsp_lines ]]
+        virtual_text = {
+            severity = nil,
+            source = nil,
+            format = function (diagnostic)
+                if diagnostic.severity == vim.diagnostic.severity.ERROR then
+                    return string.format("E: %s", diagnostic.message)
+                end
+                return diagnostic.message
+            end,
         },
+        signs = true,
         update_in_insert = true,
         underline = true,
         severity_sort = true,
@@ -55,22 +64,23 @@ M.setup = function()
 end
 
 local function lsp_keymaps(bufnr)
+    -- Use WhichKey instead of the regular keymap system, because this gives you a useful help menu
     whichkey.register({
-        ["<leader>gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
-        ["<leader>gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
-        ["<leader>K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
-        ["<leader>gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
-        ["<leader>gl"] = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Float diagnostics" },
         ["<leader>l"] = { name = "LSP"},
-        ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
-        ["<leader>li"] = { "<cmd>LspInfo<CR>", "LSP Info" },
-        ["<leader>lI"] = { "<cmd>LspInstallInfo<CR>", "LSP Install Info" },
+        ["<leader>lD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+        ["<leader>ld"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+        ["<leader>li"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
+        ["<leader>lo"] = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Float diagnostics" },
+        ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.format({async = true})<CR>", "Formatting" },
         ["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action" },
+        ["<leader>lh"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
         ["<leader>lj"] = { "<cmd>lua vim.diagnostic.goto_next({buffer=0})<CR>", "Next diagnostic" },
         ["<leader>lk"] = { "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<CR>", "Previous diagnostic" },
         ["<leader>lr"] = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
         ["<leader>ls"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
         ["<leader>lq"] = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Setloclist" },
+        --[[ Requires "lsp_lines"]]
+        ["<leader>ll"] = { "<cmd>lua require('lsp_lines').toggle()<CR>", "Toggle lsp_lines" },
     }, {
             mode = "n",
             prefix = "",
@@ -100,8 +110,8 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-    if client.name == "sumneko_lua" then
-        client.resolved_capabilities.document_formatting = false
+    if client.name == "lua_ls" then
+        client.server_capabilities.document_formatting = false
     end
 
     lsp_keymaps(bufnr)

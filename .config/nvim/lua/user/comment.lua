@@ -4,7 +4,7 @@ if not status_ok then return end
 ft = require("Comment.ft")
 
 comment.setup({
-    pre_hook = function(ctx)
+    --[[ pre_hook = function(ctx)
         local U = require("Comment.utils")
         local location = nil
         if ctx.ctype == U.ctype.block then
@@ -17,7 +17,11 @@ comment.setup({
             key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
             location = location,
         }
-    end,
+    end, ]]
+
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 })
-ft.set("lua", { '--[[%s]]', '--[[%s]]' })
+
+-- Set the lua one-line comment to the sensible "-- " instead of the default, "--[[ ]]"
+ft.set("lua", "-- %s")
 

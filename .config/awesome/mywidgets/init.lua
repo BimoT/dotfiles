@@ -1,12 +1,14 @@
 -- Initialize all the widgets
 return {
-    awesomewidget = require("mywidgets.awesomewidget"),
+    awesomewidget    = require("mywidgets.awesomewidget"),
     brightnesswidget = require("mywidgets.brightnesswidget"),
-    diskwidget = require("mywidgets.diskwidget"),
-    keyboardwidget = require("mywidgets.keyboardwidget"),
-    poweroffwidget = require("mywidgets.poweroffwidget"),
+    clockwidget      = require("mywidgets.clockwidget"),
+    iconwidget       = require("mywidgets.iconwidget"),
+    keyboardwidget   = require("mywidgets.keyboardwidget"),
+    poweroffwidget   = require("mywidgets.poweroffwidget"),
     screenshotwidget = require("mywidgets.screenshotwidget"),
-    volumewidget = require("mywidgets.volumewidget"),
-    clockwidget = require("mywidgets.clockwidget"),
+    smalltag         = require("mywidgets.smalltag"),
+    startwidget      = require("mywidgets.startwidget"),
+    volumewidget     = require("mywidgets.volumewidget"),
+    separator_98     = require("mywidgets.separator_98"),
 }
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80:autoindent

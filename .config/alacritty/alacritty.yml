@@ -14,14 +14,14 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: alacritty
+  TERM: alacritty
 
 window:
   # Window dimensions (changes require restart)
@@ -45,12 +45,12 @@ window:
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  #padding:
-  #  x: 0
-  #  y: 0
+  padding:
+   x: 0
+   y: 0
 
   # Spread additional padding evenly around the terminal content.
-  #dynamic_padding: false
+  dynamic_padding: false
 
   # Window decorations
   #
@@ -61,7 +61,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  #decorations: full
+  decorations: none
 
   # Background opacity
   #
@@ -98,7 +98,7 @@ window:
   # Override the variant of the GTK theme. Commonly supported values are `dark`
   # and `light`. Set this to `None` to use the default theme variant.
   #gtk_theme_variant: None
-  gtk_theme_variant: dark
+  decorations_theme_variant: Dark
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -119,6 +119,7 @@ font:
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
     family: Inconsolata Nerd Font
+    # family: More Perfect DOS VGA
 
     # The `style` can be specified to pick a specific face.
     style: Medium
@@ -233,7 +234,7 @@ colors:
       foreground: '#ffffff'
       background: '#000000'
 
-    bar:
+    footer_bar:
       background: '#c5c8c6'
       foreground: '#1d1f21'
 
@@ -742,6 +743,10 @@ mouse:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
+  # This is to make sure that <S-CR> and <C-CR> can be mapped in nvim
+  - { key: Return,  mods: Shift,  chars: "\x1b[13;2u" }
+  - { key: Return,  mods: Control,  chars: "\x1b[13;5u" }
+
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
