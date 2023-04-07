@@ -131,19 +131,6 @@ client.connect_signal("request::titlebars", function(c)
         }
     })
 
-    --[[ Top titlebar ]]
-    local bg_98 = gears.color({
-        type  = "linear",
-        from  = {0, 0},
-        to    = {c.width, 0},
-        stops = {{0, beautiful.bg_focus}, {1, beautiful.bg_focus2}},
-    })
-    local bg_98_inactive = gears.color({
-        type  = "linear",
-        from  = {0, 0},
-        to    = {c.width, 0},
-        stops = {{0, beautiful.inactive_color}, {1, beautiful.inactive_color2}},
-    })
     local top_titlebar = awful.titlebar(c, {
         size           = beautiful.titlebar_height + (border_width * 3),
         enable_tooltip = false,
@@ -190,7 +177,6 @@ client.connect_signal("request::titlebars", function(c)
                                             widget  = wibox.container.margin,
                                             {
                                                 id     = "background",
-                                                -- bg  = bg_98,
                                                 bg     = beautiful.bg_normal,
                                                 fg     = beautiful.fg_normal,
                                                 widget = wibox.container.background,
@@ -200,10 +186,6 @@ client.connect_signal("request::titlebars", function(c)
                                                         buttons = buttons,
                                                         layout  = wibox.layout.fixed.horizontal,
                                                         {
-                                                            -- left = border_width * 2,
-                                                            -- right = border_width * 2,
-                                                            -- top = border_width,
-                                                            -- bottom = border_width,
                                                             margins = border_width * 2,
                                                             widget  = wibox.container.margin,
                                                             {
