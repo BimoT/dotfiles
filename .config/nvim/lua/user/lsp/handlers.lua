@@ -27,7 +27,6 @@ M.setup = function()
     end
 
     local config = {
-        -- [[ Currently virtual text enabled, checking out lsp_lines ]]
         virtual_text = {
             severity = nil,
             source = nil,

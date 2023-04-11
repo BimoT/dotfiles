@@ -109,9 +109,6 @@ return packer.startup(function(use)
     use { "williamboman/mason.nvim" } -- easy installer
     use { "williamboman/mason-lspconfig.nvim" } -- extra config for mason
     use { "neovim/nvim-lspconfig" } -- base needed for lsp
-    use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function ()
-        require("lsp_lines").setup()
-    end} -- LSP diagnostics in lines under the erroring parts of code
     use { "j-hui/fidget.nvim" , config = function ()
         require("fidget").setup()
     end} -- eye candy for lsp progress
