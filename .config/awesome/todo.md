@@ -9,3 +9,4 @@
 + create dotted background for tasklist widget
 + create dotted line around "Start" text in startmenu button
 + implement mousegrabber that runs on open popup and closes popup when clicked
++ create custom titlebars for terminal applications, such as ncmpcpp
