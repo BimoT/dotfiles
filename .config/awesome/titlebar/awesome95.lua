@@ -246,7 +246,7 @@ client.connect_signal("request::titlebars", function(c)
     c:connect_signal("unfocus", function (q)
         local bg = top_titlebar:get_children_by_id("background")[1]
         -- bg:set_bg(bg_98_inactive)
-        bg:set_bg(beautiful.bg_minimize)
+        bg:set_bg(beautiful.inactive_color)
         bg:set_fg(beautiful.bg_normal)
     end)
 end)
