@@ -16,7 +16,12 @@ $character\
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
-success_symbol = '[➜](bold green) ' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+success_symbol = '[\$](green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = '[\$](red)'
+vimcmd_symbol = '[v](bold green)'
+vimcmd_replace_one_symbol = '[vr](bold green)'
+vimcmd_replace_symbol = '[vR](bold green)'
+vimcmd_visual_symbol = '[V](bold green)'
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -27,9 +32,9 @@ disabled = true
 
 [username]
 disabled = false
-style_user = 'white bold'
+style_user = 'yellow bold'
 style_root = 'red bold'
-format = '\[[$user]($style)\] '
+format = '\[[$user]($style)\]'
 show_always = true
 
 [hostname]
@@ -37,24 +42,28 @@ ssh_only = true
 
 [directory]
 truncation_length = 1
+truncation_symbol = '.../'
+style = 'bold cyan'
 disabled = false
+format = '\[[$path]($style)\]'
 
 [env_var]
 disabled = true
 
 [lua]
-format = 'on [ $version](bold blue)'
+detect_folders = []
+format = '\[on [ ](bold blue)\]'
 
 [rust]
-format = 'on [ $version](red bold)'
+format = '\[on [ ](red bold)\]'
 
 [python]
 python_binary = 'python3'
 symbol = ''
-format = 'on [${symbol} ${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+format = '\[on [${symbol} ${pyenv_prefix}(\($virtualenv\))]($style)\]'
 
 [rlang]
 symbol = 'ﳒ'
-format = 'on [$symbol ($version)]($style)'
+format = '\[on [$symbol]($style)\]'
 detect_extensions = ['R', 'r', 'Rd', 'Rmd', 'rmd', 'Rproj', 'Rsx']
 
