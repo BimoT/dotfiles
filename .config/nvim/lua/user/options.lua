@@ -42,9 +42,9 @@ end
 
 -- TODO: rewrite in lua
 -- This should turn off all the annoying highlighted matches after the search is done
-vim.cmd([[augroup vimrc-incsearch-highlight
-autocmd!
-autocmd CmdLineEnter /,\? :set hlsearch
-autocmd CmdLineLeave /,\? :set nohlsearch
-augroup END
-]])
+-- vim.cmd([[augroup vimrc-incsearch-highlight
+-- autocmd!
+-- autocmd CmdLineEnter /,\? :set hlsearch
+-- autocmd CmdLineLeave /,\? :set nohlsearch
+-- augroup END
+-- ]])

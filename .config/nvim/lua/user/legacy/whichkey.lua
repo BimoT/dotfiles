@@ -116,10 +116,9 @@ local mappings = {
     ["<leader>hw"] = { "<cmd>HopWord<CR>", "Hop word" },
 
     --[[ Diagnostics ]]
-    ["<leader>d"] = { name = "Diagnostics"},
-    ["<leader>dr"] = { "<cmd>TroubleToggle<CR>", "Trouble (Toggle)"},
-    ["<leader>do"] = { "<cmd>TodoTelescope<CR>", "TODO (Telescope)"},
-
+    ["<leader>d"] = { name = "Diagnostics" },
+    ["<leader>dr"] = { "<cmd>TroubleToggle<CR>", "Trouble (Toggle)" },
+    ["<leader>do"] = { "<cmd>TodoTelescope<CR>", "TODO (Telescope)" },
 
     --[[ Telescope ]]
     ["<leader>f"] = { name = "Telescope" },
@@ -200,10 +199,10 @@ which_key.register({
 --[[ Terminal mode keymaps ]]
 which_key.register({
     ["<esc>"] = { [[<C-\><C-n>]], "Exit terminal" },
-    ["<C-h>"] = { [[<C-\><C-n><C-W>h]], ""},
-    ["<C-j>"] = { [[<C-\><C-n><C-W>j]], ""},
-    ["<C-k>"] = { [[<C-\><C-n><C-W>k]], ""},
-    ["<C-l>"] = { [[<C-\><C-n><C-W>l]], ""},
+    ["<C-h>"] = { [[<C-\><C-n><C-W>h]], "" },
+    ["<C-j>"] = { [[<C-\><C-n><C-W>j]], "" },
+    ["<C-k>"] = { [[<C-\><C-n><C-W>k]], "" },
+    ["<C-l>"] = { [[<C-\><C-n><C-W>l]], "" },
 }, {
     mode = "t",
     prefix = "",
