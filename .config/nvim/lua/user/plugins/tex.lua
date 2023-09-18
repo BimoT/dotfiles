@@ -4,6 +4,7 @@ return {
         "lervag/vimtex",
         version = false,
         ft = { "tex" },
+        enabled = false, -- Trying out Texlab LSP
         opts = {},
         config = function()
             local opener_windows = "sumatrapdf"

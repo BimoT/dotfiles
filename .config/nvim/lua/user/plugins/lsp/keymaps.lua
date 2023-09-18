@@ -1,5 +1,40 @@
 -- Modified from LazyVim/LazyVim/lua/lazyvim/plugins/lsp/format.lua
 
+local N = {}
+
+function N.opt_jump(opt)
+    opt = opt or {}
+    if opt.jump == "split" then
+        vim.cmd([[wincmd s]])
+    elseif opt.jump == "vsplit" then
+        vim.cmd([[wincmd v]])
+    end
+end
+function N.declaration(opt)
+    N.opt_jump(opt)
+    vim.lsp.buf.declaration({ reuse_win = true })
+    -- TODO: find out lsp-on-list-handler
+end
+
+function N.definition(opt)
+    N.opt_jump(opt)
+    vim.lsp.buf.definition({ reuse_win = true })
+end
+function N.typedef(opt)
+    N.opt_jump(opt)
+    vim.lsp.buf.type_definition({ reuse_win = true })
+end
+function N.implementation(opt)
+    N.opt_jump(opt)
+    vim.lsp.buf.implementation({ reuse_win = true })
+end
+function N.references(opt)
+    N.opt_jump(opt)
+    vim.lsp.buf.references()
+end
+function N.code_action()
+    vim.lsp.buf.code_action()
+end
 local M = {}
 
 M._keys = nil
@@ -14,9 +49,9 @@ function M.get()
         -- stylua: ignore
         M._keys = {
             --TODO: populate table of keybindings
-            {"<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>",          desc = "Declaration"       },
+            {"<leader>lD", function() N.declaration({jump = "vsplit"}) end,   desc = "Declaration"       },
             {"<leader>ld", "<cmd>Telescope lsp_definitions<CR>",              desc = "Definition", has = "definition" },
-            {"<leader>li", "<cmd>lua vim.lsp.buf.implementation()<CR>",       desc = "Implementation"    },
+            {"<leader>li", function () N.implementation({jump="vsplit"}) end, desc = "Implementation"    },
             {"<leader>lR", "<cmd>Telescope lsp_references<cr>",               desc = "References" },
             {"<leader>lo", "<cmd>lua vim.diagnostic.open_float()<CR>",        desc = "Float diagnostics" },
             {"<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", mode = "v", desc = "Code action", has = "codeAction" },
@@ -92,6 +127,14 @@ function M.on_attach(client, buffer)
         ["<leader>li"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation" },
         ["<leader>lo"] = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Float diagnostics" },
         ["<leader>lR"] = { "<cmd>Telescope lsp_references<CR>", "References" },
+        -- ["<leader>lRT"] = { "<cmd>Telescope lsp_references<CR>", "Telescope References" },
+        ["<leader>lRo"] = {
+            function()
+                vim.lsp.buf.outgoing_calls()
+            end,
+            "Outgoing References",
+        },
+        --
         -- TODO: update this one
         ["<leader>lf"] = { format, "Format document" },
         ["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action" },

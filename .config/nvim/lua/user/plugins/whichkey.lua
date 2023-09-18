@@ -73,6 +73,14 @@ return {
             ["<leader><CR>"] = { "<cmd>startinsert<CR><CR>", "Open newline at this point" },
             ["<leader><space>"] = { ":<c-u>put =repeat(nr2char(10), v:count1)<cr>", "Add newline" },
 
+            -- Reload Snippets file
+            ["<leader>rs"] = {
+                function()
+                    require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/user/snippets/ft/" })
+                end,
+                "Reload Snippets",
+            },
+
             -- [[ Move lines ]]
             ["<A-j>"] = { "<cmd>m .+1<cr>==", "Move down" },
             ["<A-k>"] = { "<cmd>m .-2<cr>==", "Move up" },
@@ -114,7 +122,6 @@ return {
             },
 
             -- [[ telescope ]]
-            ["<leader>f"] = { name = "Find" },
             ["<leader>ff"] = { "<cmd>Telescope find_files<CR>", "Find Files" },
             ["<leader>fg"] = { "<cmd>Telescope live_grep<CR>", "Live Grep" },
             ["<leader>fb"] = { "<cmd>Telescope buffers<CR>", "Search Buffers" },
@@ -138,7 +145,6 @@ return {
             --TODO: add illuminate?
 
             -- [[ trouble ]]
-            ["<leader>d"] = { name = "diagnostics" },
             ["<leader>dd"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics (Trouble)" },
             ["<leader>dw"] = {
                 "<cmd>TroubleToggle workspace_diagnostics<cr>",

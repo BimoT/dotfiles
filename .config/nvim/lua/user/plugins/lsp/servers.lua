@@ -52,10 +52,19 @@ return {
                     },
                 },
                 procMacro = {
-                    enable = false,
+                    enable = true, -- Testing this
                 },
                 checkOnSave = {
                     command = "clippy",
+                },
+            },
+        },
+    },
+    texlab = {
+        settings = {
+            texlab = {
+                build = {
+                    onSave = true,
                 },
             },
         },

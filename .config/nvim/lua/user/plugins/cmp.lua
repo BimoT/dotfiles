@@ -11,6 +11,10 @@ return {
             config = function()
                 require("luasnip.loaders.from_vscode").lazy_load({
                     exclude = {
+                        -- "latex",
+                        "tex",
+                        -- "latex-snippets",
+                        -- "vscode-latex-snippets",
                         "license",
                     },
                 })
@@ -57,14 +61,44 @@ return {
                 },
                 sources = {
                     -- { name = "nvim_lua", keyword_length = 2 },
-                    { name = "nvim_lsp", keyword_length = 2 },
                     { name = "luasnip", keyword_length = 2 },
+                    { name = "nvim_lsp", keyword_length = 2 },
                     { name = "path" },
                     --[[ { name = "buffer", keyword_length = 5 }, ]]
                 },
                 mapping = {
-                    ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                    ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+                    ["<C-j>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expand_or_locally_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s", "c" }), --cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+                    ["<C-k>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s", "c" }), -- cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+                    ["<C-d>"] = cmp.mapping(function(fallback)
+                        if luasnip.choice_active() then
+                            luasnip.change_choice(1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s", "c" }),
+                    -- Select within a list of options. Useful for choice nodes
+                    ["<C-l>"] = cmp.mapping(function()
+                        require("luasnip.extras.select_choice")()
+                        -- if luasnip.choice_active() then
+                        --     luasnip.change_choice(1)
+                        -- end
+                    end, { "i", "s", "c" }),
                     ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
                     ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
                     ["<Down>"] = {
@@ -174,6 +208,13 @@ return {
                     end
                 end,
             }
+        end,
+        config = function(_, opts)
+            local cmp = require("cmp")
+            cmp.setup(opts)
+
+            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
     },
 }
