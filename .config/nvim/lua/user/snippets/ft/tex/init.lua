@@ -19,6 +19,8 @@ local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
 
 ls.add_snippets("tex", {
+    s({ trig = "quotesingle", dscr = "Enclose with single quotes" }, fmta("`<>'", { d(1, helpers.get_visual) })),
+    s({ trig = "quotedouble", dscr = "Enclose with double quotes" }, fmta("``<>''", { d(1, helpers.get_visual) })),
     s(
         { trig = "italic", dscr = "Makes text Italic" },
         fmta("\\textit{<>}", {

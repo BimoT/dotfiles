@@ -171,7 +171,27 @@ function M.get_visual_itemize(args, parent)
         end
         return sn(nil, i(1, res))
     else -- if LS_SELECT_RAW is empty, return a blank insert node
-        return sn(nil, i(1))
+        return sn(nil, i(1, { "\t\\item " }))
+    end
+end
+
+---When `LS_SELECT_RAW` contains a visual selection, return an insert node where the text is set to the visual
+---selection, with every line preceeded with an `\item[<>]`. When it is empty, returns an empty insert node
+function M.get_visual_descr(args, parent)
+    if #parent.snippet.env.LS_SELECT_RAW > 0 then
+        local res = {}
+        for _, ele in ipairs(parent.snippet.env.LS_SELECT_RAW) do
+            local line = vim.split(ele, " ", { trimempty = true })
+            local firstelem = line[1] or ""
+            -- FIX: not finished yet
+            if firstelem ~= "" then
+                local rest = string.find(ele, firstelem)
+            end
+            table.insert(res, "\t\\item " .. ele)
+        end
+        return sn(nil, i(1, res))
+    else -- if LS_SELECT_RAW is empty, return a blank insert node
+        return sn(nil, i(1, { "\t\\item[] " }))
     end
 end
 
